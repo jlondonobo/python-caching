@@ -1,0 +1,24 @@
+name: Test package with pytest
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+          cache-dependency-path: pyproject.toml
+      - name: Install Dependencies
+        run: pip install -r requirements-tests.txt
+      - name: Test with pytest
+        run: pytest tests
